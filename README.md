@@ -1,5 +1,5 @@
 # ezCipher
-A CLI in C/C++ to encrypt and decrypt text using a variety of cipher algorithms
+A CLI in C to encrypt and decrypt text using a variety of cipher algorithms
 
 #### Supposed Working:
 ```bash
@@ -15,11 +15,22 @@ Where,
 <cipher_algorithm_option>
   c: caesar
   s: substitution
+
 <encrypt_or_decrypt_mode>
   e: encrypt
   d: decrypt
+  
 <KEY>
   In accordance with the opted cipher
+```
+
+#### How to Run (Linux)
+
+```bash
+$ cd ~/ezCipherclang/src
+$ clang -c ciphers/caesar.c -c ciphers/substitution.c -c utils/utils.c -c ec.c
+$ clang -o ec ec.o caesar.o substitution.o utils.o
+$ ./ec
 ```
 
 #### TODOs

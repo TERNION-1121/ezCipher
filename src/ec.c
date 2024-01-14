@@ -1,6 +1,9 @@
+#include "utils/utils.h"
+#include "ciphers/ciphers.h"
+
 #include <stdio.h>
 #include <string.h>
-#include "utils/utils.h"
+
 
 enum CIPHER_MODE {Decrypt, Encrypt};
 enum CIPHER_ALGO {Substitution, Caesar};

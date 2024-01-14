@@ -1,4 +1,7 @@
+#include <ctype.h>
+#include <stdlib.h>
 #include <string.h>
+
 #include "utils.h"
 
 // starts_with: return 1 (true) if s1 starts with s2 else 0 (false)
@@ -17,4 +20,19 @@ int starts_with(const char *s1, const char *s2)
             return 0;
     
     return 1;
+}
+
+// str_capitalize: capitalize all the letters of the given string
+char *str_capitalize(const char *s)
+{      
+    int size = strlen(s);
+    char *capitalized = (char *) malloc(sizeof(char) * (size + 1));
+
+    if (capitalized == NULL || !size)
+        return NULL;
+
+    for (int i = 0; s[i] != '\0'; ++i)
+        capitalized[i] = toupper(s[i]);
+
+    return capitalized;
 }
