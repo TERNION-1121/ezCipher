@@ -10,5 +10,17 @@ $ encrypted/decrypted cipher/plain text:
 $ <cipher_text>
 ```
 
+Where,
+```
+<cipher_algorithm_option>
+  c: caesar
+  s: substitution
+<encrypt_or_decrypt_mode>
+  e: encrypt
+  d: decrypt
+<KEY>
+  In accordance with the opted cipher
+```
+
 #### TODOs
 1. Add Options for Caesar and Substitution Cipher (simple enough?)
