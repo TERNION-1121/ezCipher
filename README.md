@@ -24,13 +24,14 @@ Where,
   In accordance with the opted cipher
 ```
 
-#### How to Run (Linux)
+#### How to Run
 
 ```bash
 $ cd ~/ezCipherclang/src
 $ clang -c ciphers/caesar.c -c ciphers/substitution.c -c utils/utils.c -c ec.c
 $ clang -o ec ec.o caesar.o substitution.o utils.o
-$ ./ec
+$ ./ec # on linux
+$ .\ec.exe # on windows
 ```
 
 #### TODOs

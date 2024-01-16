@@ -1,13 +1,14 @@
 #include "ciphers.h"
 
 #include <ctype.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 
 // valid_substitution_key: return true if given key is a valid substitution cipher key, else false
-int valid_substitution_key(const char *key)
+bool valid_substitution_key(const char *key)
 {
     int alphaFreq[26] = {0}; // to check for duplicate characters
     int length = 0;
@@ -16,7 +17,7 @@ int valid_substitution_key(const char *key)
     {
         int i = key[length] - 'A';
         if (alphaFreq[i]) // duplicate character
-            return 0;
+            return false;
         alphaFreq[i] = 1;
     }
     return length == 26; // key is valid by length
