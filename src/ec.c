@@ -8,6 +8,8 @@
 
 #define None 0
 
+#define MAXLINES 1000   // max #lines to be processed
+
 enum CIPHER_MODE {ENCRYPT, DECRYPT};
 enum CIPHER_ALGORITHM {CAESAR, SUBSTITUTION};
 enum RETURN_STATUS {SUCCESS, FAILURE};
@@ -18,8 +20,9 @@ int CIPHER = None;
 void usage_instruction(void);
 void process_argument(const char*);
 
-char **substitution(int, const char**, const char*);
-char **caesar(int, const char**, const char*);
+char **substitution(int, const char**, int, const char*);
+char **caesar(int, const char**, int, const char*);
+
 
 int main(int argc, char **argv)
 {
@@ -44,19 +47,21 @@ int main(int argc, char **argv)
         goto error;
         
 
-    char **userText;    
-    /* get one or more lines of input using getline*/
-
+    int nlines;
+    char **userText = (char **) malloc(sizeof(char *) * MAXLINES);    
     char **processedText;
+    
+    if ((nlines = readlines(userText, MAXLINES)) < 0) // input too big
+        goto error; 
 
     switch (CIPHER)
     {
         case CAESAR:
-            processedText = caesar(MODE, (const char **) userText, key);
+            processedText = caesar(MODE, (const char **) userText, nlines, key);
             break;
 
         case SUBSTITUTION:
-            processedText =  substitution(MODE, (const char **) userText, key);
+            processedText =  substitution(MODE, (const char **) userText, nlines, key);
             break;
 
         default:
@@ -70,7 +75,7 @@ int main(int argc, char **argv)
         usage_instruction();
         return FAILURE;
     
-    // print contents of processedText
+    writelines(processedText, nlines);
 
     return SUCCESS;
 }
@@ -88,28 +93,53 @@ void process_argument(const char* arg)
 
     else if (strcmp(arg, "d") == 0)
         MODE = DECRYPT;
-    
 }
 
-char **caesar(int mode, const char **text, const char *key)
+char **caesar(int mode, const char **text, int nlines, const char *K)
 {   
     // validate key
-    // allocate memory
-    // process text
-    // return a pointer to processed text
+    if (!valid_integer(K))
+        return NULL;
+    
+    int key = atoi(K);
 
-    return NULL;
+    // allocate memory
+    char **processedText = (char **) malloc(sizeof(char *) * nlines);
+
+    // process text
+    for (int i = 0; i < nlines; ++i)
+    {   
+        if (MODE == ENCRYPT)
+            processedText[i] = caesar_encrypt(text[i], key);
+        else if (MODE == DECRYPT)
+            processedText[i] = caesar_decrypt(text[i], key);
+    }
+
+    // return a pointer to processed text
+    return processedText;
 }
 
 
-char **substitution(int mode, const char **text, const char *key)
+char **substitution(int mode, const char **text, int nlines, const char *key)
 {
     // validate key
-    // allocate memory
-    // process text
-    // return a pointer to processed text
+    if (!valid_substitution_key(key))
+        return NULL;
 
-    return NULL;
+    // allocate memory
+    char **processedText = (char **) malloc(sizeof(char *) * nlines);
+
+    // process text
+     for (int i = 0; i < nlines; ++i)
+    {   
+        if (MODE == ENCRYPT)
+            processedText[i] = substitution_encrypt(text[i], key);
+        else if (MODE == DECRYPT)
+            processedText[i] = substitution_decrypt(text[i], key);
+    }
+
+    // return a pointer to processed text
+    return processedText;
 }
 
 void usage_instruction(void)

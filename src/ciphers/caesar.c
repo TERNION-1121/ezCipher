@@ -15,7 +15,7 @@ char *caesar_encrypt(const char *plainText, int key)
     int size = strlen(plainText);
     char *cipherText = (char *) malloc(sizeof(char) * (size + 1));
 
-    if (cipherText == NULL || !size)
+    if (cipherText == NULL)
         return NULL;
 
     char ch;
@@ -32,6 +32,7 @@ char *caesar_encrypt(const char *plainText, int key)
         else
             cipherText[i] = tolower(((ch - 'a') + key) % 26 + 'A');
     }
+    cipherText[size] = '\0';
     return cipherText;
 }
 
@@ -41,7 +42,7 @@ char *caesar_decrypt(const char *cipherText, int key)
     int size = strlen(cipherText);
     char *plainText = (char *) malloc(sizeof(char) * (size + 1));
 
-    if (plainText == NULL || !size)
+    if (plainText == NULL)
         return NULL;
 
     char ch;
@@ -58,5 +59,6 @@ char *caesar_decrypt(const char *cipherText, int key)
         else 
             plainText[i] = (ch - 'a' + 26 - key) % 26 + 'a';
     } 
+    plainText[size] = '\0';
     return plainText;
 }

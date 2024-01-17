@@ -6,6 +6,22 @@
 
 #include "utils.h"
 
+
+// valid_integer: return true if whole of s represents a valid integer, else false
+bool valid_integer(const char s[])
+{
+    int i, sign;
+
+    for (i = 0; isspace(s[i]); i++);    /* skip white space */
+
+    if (s[i] == '+' || s[i] == '-')
+        i++;
+
+    for (;isdigit(s[i]); ++i);
+
+    return s[i] == '\0';
+}
+
 // starts_with: return true if s1 starts with s2 else false
 bool starts_with(const char *s1, const char *s2)
 {   
@@ -39,12 +55,12 @@ char *str_capitalize(const char *s)
     return capitalized;
 }
 
-// getline: get a single line of input from the keyboard into s; maximum lim - 1 characters to be accomodated
-int getline(char s[], int lim)
+// get_line: get a single line of input from the keyboard into s; maximum lim - 1 characters to be accomodated
+int get_line(char s[], int lim)
 {
     int c, i;
     
-    for (i = 0; i < lim - 1 && ((c = getchar())) != EOF && c != '\n'; ++i)
+    for (i = 0; i < lim - 1 && (c = getchar()) != EOF && c != '\n'; ++i)
         s[i]= c;
 
     if (c == '\n')
@@ -52,4 +68,34 @@ int getline(char s[], int lim)
 
     s[i] = '\0';
     return i;
+}
+
+#define MAXLEN 1000     // max length of any input line
+
+// readlines: read input lines
+int readlines(char *lineptr[], int maxlines)
+{
+    int len, nlines;
+    char *p, line[MAXLEN];
+
+    nlines = 0;
+    while ((len = get_line(line, MAXLEN)) > 0)
+    {
+        if (nlines >= maxlines || (p = (char *) malloc(sizeof(char) * len)) == NULL)
+            return -1;
+        else
+        {
+            line[--len] = '\0'; // delete newline
+            strncpy(p, line, len);
+            lineptr[nlines++] = p;
+        }
+    }
+    return nlines;
+}
+
+// writelines: write output lines
+void writelines(char *lineptr[], int nlines)
+{
+    while (nlines-- > 0)
+        printf("%s\n", *lineptr++);
 }

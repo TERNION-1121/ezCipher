@@ -35,7 +35,7 @@ char *substitution_encrypt(const char *plainText, const char *key)
     int size = strlen(plainText);
     char *cipherText = (char *) malloc(sizeof(char) * (size + 1)); 
 
-    if (cipherText == NULL || !size)
+    if (cipherText == NULL)
         return NULL; 
 
     char ch;
@@ -53,6 +53,7 @@ char *substitution_encrypt(const char *plainText, const char *key)
         else
             cipherText[i] = toupper(key[ch - 'A']);
     }
+    cipherText[size] = '\0';
     return cipherText;
 }
 
@@ -62,7 +63,7 @@ char *substitution_decrypt(const char *cipherText, const char *key)
     int size = strlen(cipherText);
     char *plainText = (char *) malloc(sizeof(char) * (size + 1)); 
     
-    if (plainText == NULL || !size)
+    if (plainText == NULL)
         return NULL; 
 
     char ch;
@@ -79,5 +80,6 @@ char *substitution_decrypt(const char *cipherText, const char *key)
         else
             plainText[i] = strchr(key, ch) - key + 'A';
     }
+    plainText[size] = '\0';
     return plainText;
 }
