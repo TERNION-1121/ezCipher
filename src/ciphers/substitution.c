@@ -2,7 +2,6 @@
 
 #include <ctype.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -33,7 +32,7 @@ bool valid_substitution_key(const char *key)
 char *substitution_encrypt(const char *plainText, const char *key)
 {   
     int size = strlen(plainText);
-    char *cipherText = (char *) malloc(sizeof(char) * (size + 1)); 
+    char *cipherText = (char *) malloc(sizeof(char) * size); 
 
     if (cipherText == NULL)
         return NULL; 
@@ -61,7 +60,7 @@ char *substitution_encrypt(const char *plainText, const char *key)
 char *substitution_decrypt(const char *cipherText, const char *key)
 {   
     int size = strlen(cipherText);
-    char *plainText = (char *) malloc(sizeof(char) * (size + 1)); 
+    char *plainText = (char *) malloc(sizeof(char) * size); 
     
     if (plainText == NULL)
         return NULL; 

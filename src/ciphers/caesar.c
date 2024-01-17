@@ -1,9 +1,24 @@
 #include "ciphers.h"
 
 #include <ctype.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
+
+// valid_caesar_key: return true if whole of s represents a valid integer, else false
+bool valid_caesar_key(const char *s)
+{
+    for (;isspace(*s); ++s);
+
+    if (*s == '+' || *s == '-')
+        ++s;
+
+    for (;isdigit(*s); ++s)
+        continue;
+
+    return *s == '\0';
+}
 
 /*  
     Assume caller passes a valid integer key in the range [1, 26]   
@@ -13,7 +28,8 @@
 char *caesar_encrypt(const char *plainText, int key)
 {   
     int size = strlen(plainText);
-    char *cipherText = (char *) malloc(sizeof(char) * (size + 1));
+    // printf("%s- %d\n", plainText, size);
+    char *cipherText = (char *) malloc(sizeof(char) * size);
 
     if (cipherText == NULL)
         return NULL;
@@ -40,7 +56,7 @@ char *caesar_encrypt(const char *plainText, int key)
 char *caesar_decrypt(const char *cipherText, int key)
 {   
     int size = strlen(cipherText);
-    char *plainText = (char *) malloc(sizeof(char) * (size + 1));
+    char *plainText = (char *) malloc(sizeof(char) * size);
 
     if (plainText == NULL)
         return NULL;

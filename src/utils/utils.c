@@ -1,26 +1,11 @@
+#include "utils.h"
+
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "utils.h"
-
-
-// valid_integer: return true if whole of s represents a valid integer, else false
-bool valid_integer(const char s[])
-{
-    int i, sign;
-
-    for (i = 0; isspace(s[i]); i++);    /* skip white space */
-
-    if (s[i] == '+' || s[i] == '-')
-        i++;
-
-    for (;isdigit(s[i]); ++i);
-
-    return s[i] == '\0';
-}
 
 // starts_with: return true if s1 starts with s2 else false
 bool starts_with(const char *s1, const char *s2)
@@ -80,12 +65,12 @@ int readlines(char *lineptr[], int maxlines)
 
     nlines = 0;
     while ((len = get_line(line, MAXLEN)) > 0)
-    {
+    {   
         if (nlines >= maxlines || (p = (char *) malloc(sizeof(char) * len)) == NULL)
             return -1;
         else
         {
-            line[--len] = '\0'; // delete newline
+            line[len-1] = '\0'; // delete newline
             strncpy(p, line, len);
             lineptr[nlines++] = p;
         }

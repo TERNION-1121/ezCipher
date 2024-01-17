@@ -10,12 +10,13 @@
 
 #define MAXLINES 1000   // max #lines to be processed
 
-enum CIPHER_MODE {ENCRYPT, DECRYPT};
-enum CIPHER_ALGORITHM {CAESAR, SUBSTITUTION};
+enum CIPHER_MODE {ENCRYPT = 1, DECRYPT};
+enum CIPHER_ALGORITHM {CAESAR = 1, SUBSTITUTION};
 enum RETURN_STATUS {SUCCESS, FAILURE};
 
 int MODE = None;
 int CIPHER = None;
+bool ERROR = false;
 
 void usage_instruction(void);
 void process_argument(const char*);
@@ -23,16 +24,15 @@ void process_argument(const char*);
 char **substitution(int, const char**, int, const char*);
 char **caesar(int, const char**, int, const char*);
 
-
 int main(int argc, char **argv)
-{
+{   
     if (argc != 4) 
         goto error;
 
     char *key;
 
     for (int i = 1; i < argc; ++i)
-    {
+    {   
         if (!starts_with(argv[i], "-"))
         {
             key = argv[i];
@@ -42,17 +42,15 @@ int main(int argc, char **argv)
         const char *arg = argv[i] + 1;
         process_argument(arg);
     }
-
     if (MODE == None || CIPHER == None)
         goto error;
-        
 
     int nlines;
     char **userText = (char **) malloc(sizeof(char *) * MAXLINES);    
     char **processedText;
-    
+
     if ((nlines = readlines(userText, MAXLINES)) < 0) // input too big
-        goto error; 
+        goto error;
 
     switch (CIPHER)
     {
@@ -65,19 +63,19 @@ int main(int argc, char **argv)
             break;
 
         default:
-            goto error; 
+            goto error;
     }
 
     if (processedText == NULL)
         goto error;
-
-    error:
-        usage_instruction();
-        return FAILURE;
     
     writelines(processedText, nlines);
 
     return SUCCESS;
+
+    error:
+        usage_instruction();
+        return FAILURE;
 }
 
 void process_argument(const char* arg)
@@ -97,8 +95,7 @@ void process_argument(const char* arg)
 
 char **caesar(int mode, const char **text, int nlines, const char *K)
 {   
-    // validate key
-    if (!valid_integer(K))
+    if (!valid_caesar_key(K))
         return NULL;
     
     int key = atoi(K);
@@ -121,8 +118,7 @@ char **caesar(int mode, const char **text, int nlines, const char *K)
 
 
 char **substitution(int mode, const char **text, int nlines, const char *key)
-{
-    // validate key
+{   
     if (!valid_substitution_key(key))
         return NULL;
 

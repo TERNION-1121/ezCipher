@@ -1,9 +1,7 @@
-#ifndef UTILS_H
-#define UTILS_H
-
 #include <stdbool.h>
 
-bool valid_integer(const char s[]);
+#ifndef UTILS_H
+#define UTILS_H
 
 bool starts_with(const char *s1, const char *s2);
 
