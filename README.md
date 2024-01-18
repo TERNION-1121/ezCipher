@@ -1,38 +1,131 @@
-# ezCipher
-A CLI in C to encrypt and decrypt text using a variety of cipher algorithms
+<h1 align="center"> 👨‍💻 ezCipher 👾  </h1>
+<p align="center"> A simple CLI in C to encrypt and decrypt text using a variety of cipher algorithms. </p>
 
-#### Supposed Working:
-```bash
-$ ./ec -<cipher_algorithm_option> -<encrypt_or_decrypt_mode> <KEY> 
-$ <plaintext_spread_over_multiple_lines>
-$ <end_taking_user_input_when_EOF_encountered>
-$ encrypted/decrypted cipher/plain text:
-$ <cipher_text>
+
+## 📜 Description 
+__*"In cryptography, a cipher (or cypher) is an algorithm for performing encryption or decryption—a series of well-defined steps that can be followed as a procedure... 
+ciphers generally substitute the same number of characters as are input."*__ ~ _Wikipedia_.
+
+<br>
+
+### The "Why" of this project
+While going through [CS50x 2024's Problem Set 2](https://cs50.harvard.edu/x/2024/psets/2/), an idea clicked in my mind to code a Command-Line Tool that would take a Cipher algorithm, the way the user wishes to use it i.e. to choose between a Encryption/Decryption mode, take some text, process it as per the given requirements, and output the result. Simple enough, right?
+
+And thus, I began working on this project, having in mind a similar objective.
+
+<br>
+<hr>
+To use this program, a basic knowledge of ciphers would be a prerequisite.
+
+Currently it features the below cipher algorithms, make sure to check about them on the internet:
+  1. Caesar Cipher
+  2. Substitution Cipher
+
+<br>
+<hr>
+
+### How to run the program?
+__Requirements__: A C compiler, such as GCC or Clang.
+<hr>
+
+1. Clone this repository
+2. Open the terminal, and navigate to the repository `~/ezCipher`
+3. Run the command `clang -o ec src/ec.c src/utils/utils.c src/ciphers/caesar.c src/ciphers/substitution.c`
+> You can also use `gcc` instead of `clang`
+4. Run `./ec`
+5. You'll be prompted with this message
+```
+
+error: incorrect number of arguments given, expected 4 -> 1
+
+USAGE: ./ec <cipher> <encrypt/decrypt_mode> <key>
+
+<cipher>:
+        caesar
+        substitution
+
+<encrypt/decrypt_mode>:
+        encrypt
+        decrypt
+
+<key>: in accordance with the opted cipher
+
+```
+.. You can either make use of the instructions given here, or follow along for a small example.
+
+<br>
+
+#### An example
+1. Let's test the program by using `caesar` cipher with a key of value, say 2.
+2. Run
+```
+./ec caesar encrypt 2
+Hello, World!
+This is ezCipher.
+```
+> Note: to end giving input, enter a newline and enter the EOF character (`Ctrl + Z` on Windows, `Ctrl + D` on Linux).
+3. Output:
+```
+Jgnnq, Yqtnf!
+Vjku ku gbEkrjgt.
+```
+4. Run
+```
+./ec caesar decrypt 2
+Jgnnq, Yqtnf!
+Vjku ku gbEkrjgt.
+```
+5. Output:
+```
+Hello, World!
+This is ezCipher.
+```
+
+Voila! Now you know how to use ezCipher for encrypting and decrypting your texts!
+
+<br>
+
+To give some syntax on the program usage:
+
+```
+$ ./ec <cipher_algorithm_option> <encrypt_or_decrypt_mode> <KEY> 
+<plaintext_spread_over_multiple_lines>
+<EOF>
+<processed_text>
 ```
 
 Where,
 ```
 <cipher_algorithm_option>
-  c: caesar
-  s: substitution
+  caesar
+  substitution
 
 <encrypt_or_decrypt_mode>
-  e: encrypt
-  d: decrypt
+  encrypt
+  decrypt
   
 <KEY>
-  In accordance with the opted cipher
+  in accordance with the opted cipher
 ```
 
-#### How to Run
+<hr>
+<br>
 
-```bash
-$ cd ~/ezCipherclang/src
-$ clang -c ciphers/caesar.c -c ciphers/substitution.c -c utils/utils.c -c ec.c
-$ clang -o ec ec.o caesar.o substitution.o utils.o
-$ ./ec # on linux
-$ .\ec.exe # on windows
-```
+## 🎯 Learnings
+This was my first C Project that was spread over more than a single file! 
 
-#### TODOs
-1. Add Options for Caesar and Substitution Cipher (simple enough?)
+I learnt how to use header files to include content from different files into another. The code was written by me, with a side-quest to keep up with some common coding conventions.
+
+I believe the code is well organised to some point. Let me know what I can do better with the code! (more about this in Contributions)
+
+<br>
+
+## ✏️ On Contributions
+This marks the first release of `ezCipher`. 
+
+For the future I have planned to add some tests in Python to test the working of this Command-Line Tool. 
+
+I have plans to change the key validation algorithm for caesar cipher (using atoi isn't safe for exorbitant numbers; you may get it if you have checked the code!).
+
+I'd appreciate help in all forms, from beautifying the README or the code itself, to adding tests, or even better, adding new cipher options!
+Thanks for your kind attention!
