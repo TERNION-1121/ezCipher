@@ -6,6 +6,24 @@
 #include <stdio.h>
 #include <string.h>
 
+#define MAXLEN 1000     // max length of any input line; for function readlines
+
+
+// str_capitalize: capitalize all the letters of the given string
+char *str_capitalize(const char *s)
+{      
+    int size = strlen(s);
+    char *capitalized = (char *) malloc(sizeof(char) * (size + 1));
+
+    if (capitalized == NULL || !size)
+        return NULL;
+
+    for (int i = 0; s[i] != '\0'; ++i)
+        capitalized[i] = toupper(s[i]);
+    
+    capitalized[size] = '\0';
+    return capitalized;
+}
 
 // starts_with: return true if s1 starts with s2 else false
 bool starts_with(const char *s1, const char *s2)
@@ -25,21 +43,6 @@ bool starts_with(const char *s1, const char *s2)
     return true;
 }
 
-// str_capitalize: capitalize all the letters of the given string
-char *str_capitalize(const char *s)
-{      
-    int size = strlen(s);
-    char *capitalized = (char *) malloc(sizeof(char) * (size + 1));
-
-    if (capitalized == NULL || !size)
-        return NULL;
-
-    for (int i = 0; s[i] != '\0'; ++i)
-        capitalized[i] = toupper(s[i]);
-
-    return capitalized;
-}
-
 // get_line: get a single line of input from the keyboard into s; maximum lim - 1 characters to be accomodated
 int get_line(char s[], int lim)
 {
@@ -54,8 +57,6 @@ int get_line(char s[], int lim)
     s[i] = '\0';
     return i;
 }
-
-#define MAXLEN 1000     // max length of any input line
 
 // readlines: read input lines
 int readlines(char *lineptr[], int maxlines)
@@ -83,4 +84,12 @@ void writelines(char *lineptr[], int nlines)
 {
     while (nlines-- > 0)
         printf("%s\n", *lineptr++);
+}
+
+// free_pp: free the dynamically allocated memory to a pointer to pointers
+void free_pp(void **p, int n)
+{
+    for (int i = 0; i < n; ++i)
+        free(p[i]);
+    free(p);
 }

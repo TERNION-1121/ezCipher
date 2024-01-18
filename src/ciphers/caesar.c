@@ -14,21 +14,20 @@ bool valid_caesar_key(const char *s)
     if (*s == '+' || *s == '-')
         ++s;
 
-    for (;isdigit(*s); ++s)
-        continue;
+    for (;isdigit(*s); ++s);
 
     return *s == '\0';
 }
 
+
 /*  
-    Assume caller passes a valid integer key in the range [1, 26]   
+    Assume caller passes a valid integer key in the range [1, 26)   
 */
 
 // caesar_encrypt: encrypt plaintext with the given integer key
 char *caesar_encrypt(const char *plainText, int key)
 {   
     int size = strlen(plainText);
-    // printf("%s- %d\n", plainText, size);
     char *cipherText = (char *) malloc(sizeof(char) * size);
 
     if (cipherText == NULL)
