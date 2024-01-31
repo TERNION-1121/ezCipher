@@ -38,9 +38,9 @@ const char *Ciphers[CIPHER_COUNT] = {
 /*  key validation algorithms for different ciphers;
     order should match with the one their corresponding ciphers occur in CIPHER_ALGORITHM and Ciphers */
 bool (*KeyValidations[CIPHER_COUNT])(const char *) = {
-                                                                valid_caesar_key, 
-                                                                valid_substitution_key
-                                                            };
+                                                        valid_caesar_key, 
+                                                        valid_substitution_key
+                                                    };
 
 char **substitution(int, const char **, int, const char*);
 char **caesar(int, const char **, int, const char*);
@@ -148,7 +148,7 @@ int process_mode_arg(const char *mode)
 /*  caesar: process the given text as per specified arguments using caesar cipher   */
 char **caesar(int mode, const char **text, int nlines, const char *key)
 {   
-    int K = atoi(key) % 26;
+    int K = atoi(key);
 
     char **processedText = (char **) malloc(sizeof(char *) * nlines);
 

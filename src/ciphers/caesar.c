@@ -6,17 +6,22 @@
 #include <string.h>
 
 
-// valid_caesar_key: return true if whole of s represents a valid integer, else false
-bool valid_caesar_key(const char *s)
-{
+// valid_caesar_key: return true if whole of s represents a valid integer in range [1, 26], else false
+bool valid_caesar_key(const char *key)
+{   
+    const char* s = key;
     for (;isspace(*s); ++s);
 
     if (*s == '+' || *s == '-')
         ++s;
 
-    for (;isdigit(*s); ++s);
+    for (int i = 0; i < 2 && isdigit(*s); ++s, ++i);
 
-    return *s == '\0';
+    if (*s != '\0')
+        return false;
+    
+    int n = abs(atoi(key));
+    return n >= 1 && n <= 26;
 }
 
 
@@ -28,7 +33,7 @@ bool valid_caesar_key(const char *s)
 char *caesar_encrypt(const char *plainText, int key)
 {   
     int size = strlen(plainText);
-    char *cipherText = (char *) malloc(sizeof(char) * size);
+    char *cipherText = (char *) malloc(size+1);
 
     if (cipherText == NULL)
         return NULL;
@@ -55,7 +60,7 @@ char *caesar_encrypt(const char *plainText, int key)
 char *caesar_decrypt(const char *cipherText, int key)
 {   
     int size = strlen(cipherText);
-    char *plainText = (char *) malloc(sizeof(char) * size);
+    char *plainText = (char *) malloc(size+1);
 
     if (plainText == NULL)
         return NULL;

@@ -5,8 +5,6 @@
 
 char *str_capitalize(const char *s);
 
-bool starts_with(const char *s1, const char *s2);
-
 int get_line(char s[], int lim);
 
 int readlines(char *lineptr[], int maxlines);

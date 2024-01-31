@@ -32,7 +32,7 @@ bool valid_substitution_key(const char *key)
 char *substitution_encrypt(const char *plainText, const char *key)
 {   
     int size = strlen(plainText);
-    char *cipherText = (char *) malloc(sizeof(char) * size); 
+    char *cipherText = (char *) malloc(size+1); 
 
     if (cipherText == NULL)
         return NULL; 
@@ -59,7 +59,7 @@ char *substitution_encrypt(const char *plainText, const char *key)
 char *substitution_decrypt(const char *cipherText, const char *key)
 {   
     int size = strlen(cipherText);
-    char *plainText = (char *) malloc(sizeof(char) * size); 
+    char *plainText = (char *) malloc(size+1); 
     
     if (plainText == NULL)
         return NULL; 

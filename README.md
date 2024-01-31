@@ -22,7 +22,6 @@ Currently it features the below cipher algorithms, make sure to check about them
   2. Substitution Cipher
 
 <br>
-<hr>
 
 ### How to run the program?
 __Requirements__: A C compiler, such as GCC or Clang.
@@ -124,8 +123,6 @@ I believe the code is well organised to some point. Let me know what I can do be
 This marks the first release of `ezCipher`. 
 
 For the future I have planned to add some tests in Python to test the working of this Command-Line Tool. 
-
-I have plans to change the key validation algorithm for caesar cipher (using atoi isn't safe for exorbitant numbers; you may get it if you have checked the code!).
 
 I'd appreciate help in all forms, from beautifying the README or the code itself, to adding tests, or even better, adding new cipher options!
 Thanks for your kind attention!
