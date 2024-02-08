@@ -9,23 +9,25 @@ ciphers generally substitute the same number of characters as are input."*__ ~ _
 <br>
 
 ### The "Why" of this project
-While going through [CS50x 2024's Problem Set 2](https://cs50.harvard.edu/x/2024/psets/2/), an idea clicked in my mind to code a Command-Line Tool that would take a Cipher algorithm, the way the user wishes to use it i.e. to choose between a Encryption/Decryption mode, take some text, process it as per the given requirements, and output the result. Simple enough, right?
+
+While going through [CS50x 2024's Problem Set 2](https://cs50.harvard.edu/x/2024/psets/2/), an idea clicked in my mind to code a Command-Line Tool that would take a Cipher algorithm, the way the user wishes to use it i.e. to choose between an Encryption/Decryption mode, take some text, process it as per the given requirements, and output the result. Simple enough, right?
 
 And thus, I began working on this project, having in mind a similar objective.
 
-<br>
 <hr>
+
+### Prerequisites
+
 To use this program, a basic knowledge of ciphers would be a prerequisite.
 
-Currently it features the below cipher algorithms, make sure to check about them on the internet:
-  1. Caesar Cipher
-  2. Substitution Cipher
+Currently it features the below cipher algorithms:
+  1. [Caesar](https://github.com/TERNION-1121/ezCipher/tree/main/cipher-descriptions/caesar.md)
+  2. [Substitution]()
 
-<br>
+Click on a cipher name to view its description/explanation.
 
 ### How to run the program?
 __Requirements__: A C compiler, such as GCC or Clang.
-<hr>
 
 1. Clone this repository
 2. Open the terminal, and navigate to the repository `~/ezCipher`
@@ -122,7 +124,5 @@ I believe the code is well organised to some point. Let me know what I can do be
 ## ✏️ On Contributions
 This marks the first release of `ezCipher`. 
 
-For the future I have planned to add some tests in Python to test the working of this Command-Line Tool. 
-
-I'd appreciate help in all forms, from beautifying the README or the code itself, to adding tests, or even better, adding new cipher options!
+I'd appreciate help in all forms, from beautifying the README or the code itself, to adding new cipher options!
 Thanks for your kind attention!
