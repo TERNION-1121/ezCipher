@@ -24,7 +24,7 @@ Also, when the resultant shifted character is at a position greater than **26**,
 
 $$ c_i = (p_i + shift) \ \% \ 26 $$
 
-You can interpret this using the above given image, i.e. the character at position **23 + 4 = 27** is the same as the character at position **1**, that is `A`. It sort of gets rotated to the same range of characters $ [1, 26] $ .
+You can interpret this using the above given image, i.e. the character at position **23 + 4 = 27** is the same as the character at position **1**, that is `A`. It sort of gets rotated to the same range of characters $[1, 26]$ .
 
 <br>
 
@@ -37,7 +37,7 @@ Decryption is just shifting the characters with the given shift/key backwards,
 
 <br>
 
-Using the formula, $ p_i = (c_i + 26 - shift) \ \% \ 26 $
+Using the formula, $p_i = (c_i + 26 - shift) \ \% \ 26$
 
 
 [^1]: Source: [Khan Academy](https://www.khanacademy.org/computing/computer-science/cryptography/crypt/v/caesar-cipher#:~:text=The%20Caesar%20Cipher%2C%20used%20by,exploits%20patterns%20in%20letter%20frequencies.)
