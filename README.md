@@ -22,7 +22,7 @@ To use this program, a basic knowledge of ciphers would be a prerequisite.
 
 Currently it features the below cipher algorithms:
   1. [Caesar](https://github.com/TERNION-1121/ezCipher/tree/main/cipher-descriptions/caesar.md)
-  2. [Substitution]()
+  2. [Substitution](https://github.com/TERNION-1121/ezCipher/tree/main/cipher-descriptions/substitution.md)
 
 Click on a cipher name to view its description/explanation.
 
