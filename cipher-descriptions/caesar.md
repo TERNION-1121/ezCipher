@@ -1,6 +1,6 @@
 # Caesar
 
-<img src="https://cs50.harvard.edu/x/2024/psets/2/caesar/cipher.jpg" height=200 width=200>
+<img src="https://cs50.harvard.edu/x/2024/psets/2/caesar/cipher.jpg" height=300 width=300>
 
 <br>
 
