@@ -22,62 +22,61 @@ bool valid_substitution_key(const char *key)
     return length == 26; // key is valid by length
 }
 
-
 /*  
     Assume caller passes a valid key,
     which is a 26 character long uppercase permutation of the English Alphabet    
 */
 
 // substitution_encrypt: encrypt the given plaintext with the given key
-char *substitution_encrypt(const char *plainText, const char *key)
+char *substitution_encrypt(const char *plaintext, const char *key)
 {   
-    int size = strlen(plainText);
-    char *cipherText = (char *) malloc(size+1); 
+    int size = strlen(plaintext);
+    char *ciphertext = (char *) malloc(size + 1); 
 
-    if (cipherText == NULL)
+    if (ciphertext == NULL)
         return NULL; 
 
     char ch;
-    for (int i = 0; (ch = plainText[i]) != '\0'; ++i)
+    for (int i = 0; (ch = plaintext[i]) != '\0'; ++i)
     {
         if (!isalpha(ch)) 
         {
-            cipherText[i] = ch;
+            ciphertext[i] = ch;
             continue;
         }
-        // lowercase char in plaintext remains lowercase in the cipher text, same with uppercase char
+        // lowercase char in plaintext remains lowercase in the ciphertext, same with uppercase char
         if (islower(ch))
-            cipherText[i] = tolower(key[ch - 'a']);
+            ciphertext[i] = tolower(key[ch - 'a']);
         else
-            cipherText[i] = key[ch - 'A'];
+            ciphertext[i] = key[ch - 'A'];
     }
-    cipherText[size] = '\0';
-    return cipherText;
+    ciphertext[size] = '\0';
+    return ciphertext;
 }
 
-// substitution_decrypt: decrypt the given plaintext with the given key
-char *substitution_decrypt(const char *cipherText, const char *key)
+// substitution_decrypt: decrypt the given ciphertext with the given key
+char *substitution_decrypt(const char *ciphertext, const char *key)
 {   
-    int size = strlen(cipherText);
-    char *plainText = (char *) malloc(size+1); 
+    int size = strlen(ciphertext);
+    char *plaintext = (char *) malloc(size + 1); 
     
-    if (plainText == NULL)
+    if (plaintext == NULL)
         return NULL; 
 
     char ch;
-    for (int i = 0; (ch = cipherText[i]) != '\0'; ++i)
+    for (int i = 0; (ch = ciphertext[i]) != '\0'; ++i)
     {   
         if (!isalpha(ch)) 
         {
-            plainText[i] = ch;
+            plaintext[i] = ch;
             continue;
         }
 
         if (islower(ch))
-            plainText[i] = strchr(key, toupper(ch)) - key + 'a';
+            plaintext[i] = strchr(key, toupper(ch)) - key + 'a';
         else
-            plainText[i] = strchr(key, ch) - key + 'A';
+            plaintext[i] = strchr(key, ch) - key + 'A';
     }
-    plainText[size] = '\0';
-    return plainText;
+    plaintext[size] = '\0';
+    return plaintext;
 }

@@ -8,14 +8,15 @@
 
 #define None -1
 
-#define CIPHER_COUNT 2  // #ciphers available to use
+#define CIPHER_COUNT 3  // #ciphers available to use
 
 #define MAXLINES 1000   // max #lines to be processed
 
 enum CIPHER_MODE {ENCRYPT, DECRYPT};
 enum CIPHER_ALGORITHM {
                         CAESAR, 
-                        SUBSTITUTION
+                        SUBSTITUTION,
+                        VIGENERE
                         };
 enum RETURN_STATUS {
                     SUCCESS, INCORRECT_ARG_COUNT, 
@@ -32,18 +33,21 @@ int process_mode_arg(const char *);
     order should match the one in CIPHER_ALGORITHM  */
 const char *Ciphers[CIPHER_COUNT] = {
                                         "caesar", 
-                                        "substitution"
+                                        "substitution",
+                                        "vigenere"
                                     };
 
 /*  key validation algorithms for different ciphers;
     order should match with the one their corresponding ciphers occur in CIPHER_ALGORITHM and Ciphers */
 bool (*KeyValidations[CIPHER_COUNT])(const char *) = {
                                                         valid_caesar_key, 
-                                                        valid_substitution_key
+                                                        valid_substitution_key,
+                                                        valid_vigenere_key
                                                     };
 
 char **substitution(int, const char **, int, const char*);
 char **caesar(int, const char **, int, const char*);
+char **vigenere(int, const char **, int, const char *);
 
 int main(int argc, char **argv)
 {   
@@ -68,33 +72,36 @@ int main(int argc, char **argv)
 
 
     int nlines;
-    char **userText = (char **) malloc(sizeof(char *) * MAXLINES);    
-    char **processedText;
+    char **usertext = (char **) malloc(sizeof(char *) * MAXLINES);    
+    char **processedtext;
 
-    if ((nlines = readlines(userText, MAXLINES)) < 0)   // input too big
+    if ((nlines = readlines(usertext, MAXLINES)) < 0)   // input too big
         goto input_too_big;
 
     switch (cipher)
     {
         case CAESAR:
-            processedText = caesar(mode, (const char **) userText, nlines, key);
+            processedtext = caesar(mode, (const char **) usertext, nlines, key);
             break;
 
         case SUBSTITUTION:
-            processedText =  substitution(mode, (const char **) userText, nlines, key);
+            processedtext = substitution(mode, (const char **) usertext, nlines, key);
             break;
+
+        case VIGENERE:
+            processedtext = vigenere(mode, (const char **) usertext, nlines, key); 
 
         default:
             break;
     }
 
-    if (processedText == NULL)
+    if (processedtext == NULL)
         goto input_too_big;
     
-    writelines(processedText, nlines);
+    writelines(processedtext, nlines);
 
-    free_pp((void **) userText, nlines);
-    free_pp((void **) processedText, nlines);
+    free_pp((void **) usertext, nlines);
+    free_pp((void **) processedtext, nlines);
 
     return SUCCESS;
 
@@ -150,16 +157,16 @@ char **caesar(int mode, const char **text, int nlines, const char *key)
 {   
     int K = atoi(key);
 
-    char **processedText = (char **) malloc(sizeof(char *) * nlines);
+    char **processedtext = (char **) malloc(sizeof(char *) * nlines);
 
     for (int i = 0; i < nlines; ++i)
     {   
         if (mode == ENCRYPT)
-            processedText[i] = caesar_encrypt(text[i], K);
+            processedtext[i] = caesar_encrypt(text[i], K);
         else if (mode == DECRYPT)
-            processedText[i] = caesar_decrypt(text[i], K);
+            processedtext[i] = caesar_decrypt(text[i], K);
     }
-    return processedText;
+    return processedtext;
 }
 
 /*  substitution: process the given text as per specified arguments using substitution cipher   */
@@ -167,16 +174,33 @@ char **substitution(int mode, const char **text, int nlines, const char *key)
 {   
     key = str_capitalize(key);
 
-    char **processedText = (char **) malloc(sizeof(char *) * nlines);
+    char **processedtext = (char **) malloc(sizeof(char *) * nlines);
 
-     for (int i = 0; i < nlines; ++i)
+    for (int i = 0; i < nlines; ++i)
     {   
         if (mode == ENCRYPT)
-            processedText[i] = substitution_encrypt(text[i], key);
+            processedtext[i] = substitution_encrypt(text[i], key);
         else if (mode == DECRYPT)
-            processedText[i] = substitution_decrypt(text[i], key);
+            processedtext[i] = substitution_decrypt(text[i], key);
     }
-    return processedText;
+    return processedtext;
+}
+
+/*  vigenere: process the given text as per specified arguments using vigenere cipher    */
+char **vigenere(int mode, const char **text, int nlines, const char *key)
+{
+    key = str_capitalize(key);
+    
+    char **processedtext = (char **) malloc(sizeof(char *) * nlines);
+
+    for (int i = 0; i < nlines; ++i)
+    {   
+        if (mode == ENCRYPT)
+            processedtext[i] = vigenere_encrypt(text[i], key);
+        else if (mode == DECRYPT)
+            processedtext[i] = vigenere_decrypt(text[i], key);
+    }
+    return processedtext;   
 }
 
 /*  usage_instruction: output usage instructions in the terminal    */
@@ -185,7 +209,8 @@ void usage_instruction(void)
     printf("\nUSAGE: ./ec <cipher> <encrypt/decrypt_mode> <key>\n\n");
     printf("<cipher>:\n");
     printf("\tcaesar\n");
-    printf("\tsubstitution\n\n");
+    printf("\tsubstitution\n");
+    printf("\tvigenere\n\n");
     printf("<encrypt/decrypt_mode>:\n");
     printf("\tencrypt\n");
     printf("\tdecrypt\n\n");

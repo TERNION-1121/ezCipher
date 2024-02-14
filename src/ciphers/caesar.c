@@ -24,61 +24,56 @@ bool valid_caesar_key(const char *key)
     return n >= 1 && n <= 26;
 }
 
-
 /*  
     Assume caller passes a valid integer key in the range [1, 26)   
 */
 
 // caesar_encrypt: encrypt plaintext with the given integer key
-char *caesar_encrypt(const char *plainText, int key)
+char *caesar_encrypt(const char *plaintext, int key)
 {   
-    int size = strlen(plainText);
-    char *cipherText = (char *) malloc(size+1);
+    int size = strlen(plaintext);
+    char *ciphertext = (char *) malloc(size + 1);
 
-    if (cipherText == NULL)
+    if (ciphertext == NULL)
         return NULL;
 
     char ch;
-    for (int i = 0; (ch = plainText[i]) != '\0'; ++i)
+    for (int i = 0; (ch = plaintext[i]) != '\0'; ++i)
     {
         if (!isalpha(ch))
         {
-            cipherText[i] = ch;
+            ciphertext[i] = ch;
             continue;
         }
-
-        if (isupper(ch))
-            cipherText[i] = ((ch - 'A') + key) % 26 + 'A';
-        else
-            cipherText[i] = tolower(((ch - 'a') + key) % 26 + 'A');
+        
+        int asciishift = (isupper(ch) ? 'A' : 'a');
+        ciphertext[i] = (ch - asciishift + key) % 26 + asciishift;
     }
-    cipherText[size] = '\0';
-    return cipherText;
+    ciphertext[size] = '\0';
+    return ciphertext;
 }
 
 // caesar_decrypt: decrypt ciphertext with the given integer key
-char *caesar_decrypt(const char *cipherText, int key)
+char *caesar_decrypt(const char *ciphertext, int key)
 {   
-    int size = strlen(cipherText);
-    char *plainText = (char *) malloc(size+1);
+    int size = strlen(ciphertext);
+    char *plaintext = (char *) malloc(size + 1);
 
-    if (plainText == NULL)
+    if (plaintext == NULL)
         return NULL;
 
     char ch;
-    for (int i = 0; (ch = cipherText[i]) != '\0'; ++i)
+    for (int i = 0; (ch = ciphertext[i]) != '\0'; ++i)
     {
         if (!isalpha(ch))
         {
-            plainText[i] = ch;
+            plaintext[i] = ch;
             continue;
         }
 
-        if (isupper(ch))
-            plainText[i] = (ch - 'A' + 26 - key) % 26 + 'A';
-        else 
-            plainText[i] = (ch - 'a' + 26 - key) % 26 + 'a';
+        int asciishift = (isupper(ch) ? 'A' : 'a');
+        plaintext[i] = (ch - asciishift + 26 - key) % 26 + asciishift;
     } 
-    plainText[size] = '\0';
-    return plainText;
+    plaintext[size] = '\0';
+    return plaintext;
 }

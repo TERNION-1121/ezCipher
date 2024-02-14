@@ -23,7 +23,8 @@ To use this program, a basic knowledge of ciphers would be a prerequisite.
 Currently it features the below cipher algorithms:
   1. [Caesar](https://github.com/TERNION-1121/ezCipher/tree/main/cipher-descriptions/caesar.md)
   2. [Substitution](https://github.com/TERNION-1121/ezCipher/tree/main/cipher-descriptions/substitution.md)
-
+  3. [Vigenère]()
+  
 Click on a cipher name to view its description/explanation.
 
 ### How to run the program?
@@ -31,7 +32,7 @@ __Requirements__: A C compiler, such as GCC or Clang.
 
 1. Clone this repository
 2. Open the terminal, and navigate to the repository `~/ezCipher`
-3. Run the command `clang -o ec src/ec.c src/utils/utils.c src/ciphers/caesar.c src/ciphers/substitution.c`
+3. Run the command `clang -o ec src/ec.c src/utils/utils.c src/ciphers/caesar.c src/ciphers/substitution.c src/ciphers/vigenere.c`
 > You can also use `gcc` instead of `clang`
 4. Run `./ec`
 5. You'll be prompted with this message
@@ -44,6 +45,7 @@ USAGE: ./ec <cipher> <encrypt/decrypt_mode> <key>
 <cipher>:
         caesar
         substitution
+        vigenere
 
 <encrypt/decrypt_mode>:
         encrypt
@@ -100,6 +102,7 @@ Where,
 <cipher_algorithm_option>
   caesar
   substitution
+  vigenere
 
 <encrypt_or_decrypt_mode>
   encrypt
